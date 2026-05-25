@@ -20,8 +20,8 @@
       `((".*" "~/.emacs_saves/" t)))
 
 ;; Theme
-;; (load-theme 'gruber-darker t)
-(load-theme 'flatland t)
+(load-theme 'gruber-darker t)
+;;(load-theme 'flatland t)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
@@ -95,7 +95,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("8288bfda564c129eb993ce6333f859410679e8c4b4f3a0ec221fd8c91d04ca41" default)))
+   '("01a9797244146bbae39b18ef37e6f2ca5bebded90d9fe3a2f342a9e863aaa4fd" "0223215a464167d93b9cfef9b1cdf9b0768ab660f33b3068b647f7b12aa453a0" "d4d3c01619ec00d62523157bab274fcbc0d227a92d78a546ddc29415cb519619" "8288bfda564c129eb993ce6333f859410679e8c4b4f3a0ec221fd8c91d04ca41" default)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
