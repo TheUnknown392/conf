@@ -67,12 +67,18 @@
 
 ;; multiple-cursores
 (require 'multiple-cursors)
-
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+
+;; jumping between words and lines
+(require 'ace-jump-mode)
+(global-set-key (kbd "C-c c") 'ace-jump-mode) ; jumps to character
+(global-set-key (kbd "C-c l") 'ace-jump-line-mode) ; jumps to line
+(global-set-key (kbd "C-c w") 'ace-jump-word-mode) ; jumps to word
+
 
 ;; spaces everywhere
 (setq-default tab-width 4)
