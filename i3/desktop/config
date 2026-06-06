@@ -79,7 +79,7 @@ bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
-bindsym $mod+BackSpace kill
+# bindsym $mod+BackSpace kill # Too inconvienient
 
 # Switch to next workspace
 bindsym $mod+Tab workspace next_on_output
@@ -224,8 +224,33 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+    status_command i3status
+
+    colors{
+        background #141414
+        focused_workspace  #3a5560 #3a5560 #1f2430
+    }
 }
+
+## polybar
+  ### exec --no-startup-id ~/.config/polybar/launch.sh
+  ##
+  ### make it look flat
+  ##default_border pixel 0
+  ##default_floating_border pixel 0
+  ### something top bar
+  ###                        border background text indicator
+  ##client.focused          #1f2430 #1f2430 #cdd6f4 #3b5b6b
+  ##client.focused_inactive #232634 #232634 #b0b6c3 #2f3444
+  ##client.unfocused        #2a2f3a #2a2f3a #8b93a6 #2a2f3a
+  ##client.urgent           #5c6a72 #5c6a72 #ffffff #5c6a72
+ 
+# lighter top bar
+client.focused          #3a5560 #3a5560 #f1f1f1
+
+
+#wallpaper
+exec --no-startup-id feh --bg-center /usr/share/wallpapers/custom/AdventureTime_Cliff.png
 
 # preloads
 # brave
