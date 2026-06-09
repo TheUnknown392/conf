@@ -19,6 +19,10 @@
 (setq auto-save-file-name-transforms
       `((".*" "~/.emacs_saves/" t)))
 
+;; ido setup for auto completion
+(require 'ido)
+(ido-mode 1)
+
 ;; Theme
 (load-theme 'gruber-darker t)
 ;;(load-theme 'flatland t)
@@ -34,6 +38,12 @@
     (c-set-style "k&r")
     (setq c-basic-offset 4)
     (setq indent-tabs-mode nil)))
+;; c style
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (c-set-style "k&r")
+            (setq c-basic-offset 4)
+            (setq indent-tabs-mode nil)))
 
 ;; Move text
 (global-set-key (kbd "M-p") 'move-text-up)
@@ -75,7 +85,7 @@
 
 ;; jumping between words and lines
 (require 'ace-jump-mode)
-(global-set-key (kbd "C-c c") 'ace-jump-mode) ; jumps to character
+(global-set-key (kbd "C-c c") 'ace-jump-char-mode) ; jumps to character
 (global-set-key (kbd "C-c l") 'ace-jump-line-mode) ; jumps to line
 (global-set-key (kbd "C-c w") 'ace-jump-word-mode) ; jumps to word
 
