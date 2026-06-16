@@ -26,7 +26,6 @@
 ;; Theme
 (load-theme 'gruber-darker t)
 ;;(load-theme 'flatland t)
-;;(message "theme loaded")
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
@@ -36,23 +35,15 @@
 (require 'magit)
 (setq indent-guide-global-mode 1)
 
-;; Stop word motion at special characters
-(defun my/set-word-boundaries ()
-(modify-syntax-entry ?, ".")
-(modify-syntax-entry ?\; ".")
-(modify-syntax-entry ?: ".")
-(modify-syntax-entry ?\( ".")
-(modify-syntax-entry ?\) ".")
-(modify-syntax-entry ?\" ".")
-(modify-syntax-entry ?\{ ".")
-(modify-syntax-entry ?\} ".")
-(modify-syntax-entry ?\? "."))
-
-;; the # means function
-(add-hook 'after-change-major-mode-hook #'my/set-word-boundaries)
-
 ;; C# style
 (add-hook 'csharp-mode-hook
+(lambda ()
+(c-set-style "k&r")
+(setq c-basic-offset 4)
+(setq indent-tabs-mode nil)))
+
+;; c style
+(add-hook 'c-mode-common-hook
 (lambda ()
 (c-set-style "k&r")
 (setq c-basic-offset 4)
