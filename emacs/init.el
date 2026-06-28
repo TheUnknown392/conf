@@ -57,20 +57,16 @@
 (require 'company)
 (global-company-mode)
 
-(setq company-idle-delay nil)
+(setq company-idle-delay 0.2)
 (setq company-show-quick-access t)
 
 (setq company-backends
 '((company-dabbrev-code
 company-dabbrev
 company-files)
-company-capf))
+  company-capf))
 
-(setq company-dabbrev-other-buffers nil)
-(setq company-dabbrev-ignore-case t)
-(setq company-dabbrev-downcase nil)
-
-(setq company-minimum-prefix-length 1)
+(setq company-minimum-prefix-length 2)
 
 (global-set-key (kbd "C-.") #'company-complete)
 
@@ -86,8 +82,8 @@ company-capf))
 (global-set-key (kbd "C->") 'mc/mark-previous-like-this)
 
 (global-set-key (kbd "C-c C-a") 'mc/mark-all-like-this)
-(global-set-key (kbd "C-c f") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c b") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-f") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c C-b") 'mc/mark-previous-like-this)
 
 ;; jumping between words and lines
 (require 'ace-jump-mode)
