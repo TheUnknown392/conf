@@ -68,7 +68,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # for screen shotting
-bindsym Print exec xfce4-screenshooter
+bindsym Print exec xfce4-screenshooter -r
+bindsym Shift+$mod+s exec xfce4-screenshooter -r
 
 # use smart popup when on fullscreen
 popup_during_fullscreen smart
