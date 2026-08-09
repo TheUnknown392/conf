@@ -259,7 +259,6 @@ bar {
 # lighter top bar
 client.focused          #3a5560 #3a5560 #f1f1f1
 
-
 #wallpaper
 exec --no-startup-id feh --bg-center /usr/share/wallpapers/custom/AdventureTime_Cliff.png
 
@@ -274,4 +273,8 @@ exec --no-startup-id feh --bg-center /usr/share/wallpapers/custom/AdventureTime_
 exec --no-startup-id emacs --daemon
 
 # steam
-exec --no-startup-id steam -silent
+# exec --no-startup-id steam -silent 
+
+# xmodmap
+exec_always --no-startup-id xmodmap ~/.Xmodmap
+exec_always --no-startup-id xcape -e "Control_L=Escape"
