@@ -101,13 +101,14 @@
     (progn
       (require 'company)
       (global-company-mode)
-      (setq company-idle-delay 0.2)
+      (setq company-idle-delay 0.1)
       (setq company-show-quick-access t)
+      (setq company-cancel-on-page-break t)
       (setq company-backends
-            '((company-dabbrev-code
+            '(company-capf
+              company-dabbrev-code
                company-dabbrev
-               company-files)
-              company-capf))
+               company-files))
       (setq company-minimum-prefix-length 2)
       (global-set-key (kbd "C-.") #'company-complete))
   (error (message "Could not load company: %s" err)))
@@ -156,5 +157,7 @@
 (global-set-key (kbd "C-c k") #'delete-window)
 
 ;; Import elfeed data from this file using this
-; (load "~/.emacs.d/feeds.el")
+; (load "~/.emacs.d/feeds.el") edit this
 (global-set-key (kbd "C-c r") 'elfeed) ; open elfeed-search
+
+; (load "~/.emacs.d/java.el") edit this
