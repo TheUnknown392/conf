@@ -31,6 +31,7 @@
                with-editor
                magit
                company
+               elfeed
                multiple-cursors
                ace-jump-mode
                move-text
@@ -60,6 +61,11 @@
 (condition-case err
     (require 'magit)
   (error (message "Could not load magit: %s" err)))
+
+;; elfeed
+(condition-case err
+    (require 'elfeed)
+  (error (message "Could not load elfeed: %s" err)))
 
 ;; Indent guide (fixed: call as function, not setq)
 (condition-case err
@@ -148,3 +154,7 @@
 
 ;; Kill Focused pane
 (global-set-key (kbd "C-c k") #'delete-window)
+
+;; Import elfeed data from this file using this
+; (load "~/.emacs.d/feeds.el")
+(global-set-key (kbd "C-c r") 'elfeed) ; open elfeed-search
