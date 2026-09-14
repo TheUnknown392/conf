@@ -3,8 +3,10 @@ import json
 import requests
 from pathlib import Path
 
+# Put handle "@handle" in each line on INPUT_FILE
 INPUT_FILE = "channels.txt"
-OUTPUT_FILE = "rss_urls.txt"
+# Output of generated el file for initializing rss list
+OUTPUT_FILE = "../feeds.el"
 
 HEADERS = {
     "User-Agent": (
@@ -13,7 +15,6 @@ HEADERS = {
         "Chrome/140.0.0.0 Safari/537.36"
     )
 }
-
 
 def get_rss_url(channel):
     # Allow either @handle or complete YouTube URL
@@ -35,7 +36,8 @@ def get_rss_url(channel):
         # Find ytInitialData
         match = re.search(
             r"var ytInitialData\s*=\s*(\{.*?\});",
-            html
+            html,
+            flags=re.DOTALL
         )
 
         if not match:
@@ -65,6 +67,11 @@ def get_rss_url(channel):
     return None
 
 
+def escape_elisp_string(s: str) -> str:
+    # Escape backslashes and double quotes for Elisp strings
+    return s.replace("\\", "\\\\").replace('"', '\\"')
+
+
 def main():
     input_path = Path(INPUT_FILE)
     output_path = Path(OUTPUT_FILE)
@@ -75,7 +82,7 @@ def main():
         if line.strip()
     ]
 
-    rss_urls = []
+    feed_entries = []
 
     for channel in channels:
         print(f"Processing: {channel}")
@@ -84,15 +91,34 @@ def main():
 
         if rss_url:
             print(f"  -> {rss_url}")
-            rss_urls.append(rss_url + " ;;" + channel)
+            # channel[1:] to strip leading '@' for the label
+            label = channel[1:] if channel.startswith("@") else channel
+            label_escaped = escape_elisp_string(label)
+            url_escaped = escape_elisp_string(rss_url)
+
+            feed_entries.append(
+                f'        ("{url_escaped}" youtube {label_escaped})'
+            )
+
+    # Build the Elisp code
+    elisp_lines = [
+        "(setq elfeed-feeds",
+        "  '(",
+    ]
+
+    elisp_lines.extend(feed_entries)
+
+    elisp_lines.extend([
+        "      ))",
+    ])
 
     output_path.write_text(
-        "\n".join(rss_urls) + "\n",
+        "\n".join(elisp_lines) + "\n",
         encoding="utf-8"
     )
 
     print()
-    print(f"Saved {len(rss_urls)} RSS URLs to {OUTPUT_FILE}")
+    print(f"Saved RSS URLs to {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":
