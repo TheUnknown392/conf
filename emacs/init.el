@@ -88,7 +88,7 @@
             (setq c-basic-offset 4)
             (setq indent-tabs-mode nil)))
 
-;; Move text (fixed: require added so keybindings actually work)
+;; Move text 
 (condition-case err
     (progn
       (require 'move-text)
@@ -101,19 +101,24 @@
     (progn
       (require 'company)
       (global-company-mode)
+
       (setq company-idle-delay 0.1)
       (setq company-show-quick-access t)
       (setq company-cancel-on-page-break t)
-      (setq company-backends
-            '(company-capf
-              company-files
-              company-dabbrev-code
-              company-dabbrev))
       (setq company-minimum-prefix-length 2)
-      (setq company-dabbrev-other-buffers t)
-      (setq company-dabbrev-code-other-buffers t)
+
+      (setq company-backends
+            '((company-capf
+               company-files
+               company-dabbrev-code
+               company-dabbrev)))
+
+      (setq company-dabbrev-other-buffers 'all)
+      (setq company-dabbrev-code-other-buffers 'all)
+
       (global-set-key (kbd "C-.") #'company-complete))
   (error (message "Could not load company: %s" err)))
+
 
 ;; multiple-cursors
 (condition-case err
