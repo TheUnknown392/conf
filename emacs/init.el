@@ -106,10 +106,12 @@
       (setq company-cancel-on-page-break t)
       (setq company-backends
             '(company-capf
+              company-files
               company-dabbrev-code
-               company-dabbrev
-               company-files))
+              company-dabbrev))
       (setq company-minimum-prefix-length 2)
+      (setq company-dabbrev-other-buffers t)
+      (setq company-dabbrev-code-other-buffers t)
       (global-set-key (kbd "C-.") #'company-complete))
   (error (message "Could not load company: %s" err)))
 
@@ -156,8 +158,11 @@
 ;; Kill Focused pane
 (global-set-key (kbd "C-c k") #'delete-window)
 
-;; Import elfeed data from this file using this
-; (load "~/.emacs.d/feeds.el") edit this
-(global-set-key (kbd "C-c r") 'elfeed) ; open elfeed-search
+;; Change delete behaviour
+(load-file "~/.emacs.d/delete.el")
 
-; (load "~/.emacs.d/java.el") edit this
+;; Import elfeed data from this file
+(load-file "~/.emacs.d/feeds.el")   ; just sets elfeed-feeds
+(global-set-key (kbd "C-c r") #'elfeed)
+
+(load "~/.emacs.d/java.el")
