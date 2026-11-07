@@ -1,0 +1,12 @@
+configuration {
+    run-command: "{cmd}";
+    kb-row-up: "Control+p";
+    kb-row-down: "Control+n";
+
+    kb-mode-previous: "Super-d";
+    
+    kb-remove-to-eol: "Control+k";
+    kb-remove-to-sol: "Control+u";
+}
+
+@theme "/usr/share/rofi/themes/sidebar.rasi"
