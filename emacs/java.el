@@ -1,3 +1,4 @@
+;; needs jdtls language server
 (load "~/.emacs.d/lsp.el")
 
 (defun my/java-lsp-setup ()

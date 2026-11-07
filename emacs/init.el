@@ -1,3 +1,10 @@
+(load "~/.emacs.d/constants.el")
+
+;; seperate emacs append
+(unless (file-exists-p custom-file-name)
+  (write-region (region-beginning) (region-end) custom-file-name))
+(setq custom-file custom-file-name)
+
 ;; Package setup
 (require 'package)
 (setq package-archives
@@ -12,7 +19,8 @@
 (set-face-attribute 'default nil :height 200)
 (global-display-line-numbers-mode 1) 
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+;; theme
+(add-to-list 'custom-theme-load-path custom-theme-folder)
 (condition-case err
     (load-theme 'gruber-darker t)
   (error (message "Could not load gruber-darker theme: %s" err)))
@@ -29,11 +37,12 @@
                llama
                transient
                with-editor
+               activity-watch-mode
                magit
                company
                elfeed
-               multiple-cursors
                ace-jump-mode
+               multiple-cursors
                move-text
                indent-guide
                gruber-darker-theme))
@@ -44,18 +53,29 @@
 
 ;; Subword
 (global-subword-mode 1)
-
+ 
 ;; Backups
-(setq backup-directory-alist '(("." . "~/.emacs_backups")))
+(make-directory custom-backup-folder t)
+(make-directory custom-saves-folder t)
+(setq backup-directory-alist
+      `(("." . ,custom-backup-folder)))
 (setq auto-save-file-name-transforms
-      `((".*" "~/.emacs_saves/" t)))
+      `((".*" ,custom-saves-folder t)))
 
 ;; ido setup for auto completion
 (require 'ido)
 (ido-mode 1)
 
-;; Electric Pair
-(electric-pair-mode 1)
+;; dired edits
+(require 'dired-x)
+(setq dired-dwim-target t)
+(setq dired-listing-switches "-lah")
+(setq wdired-allow-to-change-permissions t)
+
+;; electric pair mode
+(electric-pair-mode)
+(setq electric-pair-skip-self 'always)
+
 
 ;; Magit
 (condition-case err
@@ -67,7 +87,7 @@
     (require 'elfeed)
   (error (message "Could not load elfeed: %s" err)))
 
-;; Indent guide (fixed: call as function, not setq)
+;; Indent guide
 (condition-case err
     (progn
       (require 'indent-guide)
@@ -77,14 +97,12 @@
 ;; C# style
 (add-hook 'csharp-mode-hook
           (lambda ()
-            (c-set-style "k&r")
             (setq c-basic-offset 4)
             (setq indent-tabs-mode nil)))
 
 ;; c style
 (add-hook 'c-mode-common-hook
           (lambda ()
-            (c-set-style "k&r")
             (setq c-basic-offset 4)
             (setq indent-tabs-mode nil)))
 
@@ -114,6 +132,7 @@
                company-dabbrev)))
 
       (setq company-dabbrev-other-buffers 'all)
+      (setq company-dabbrev-code-ignore-case t)
       (setq company-dabbrev-code-other-buffers 'all)
 
       (global-set-key (kbd "C-.") #'company-complete))
@@ -124,13 +143,14 @@
 (condition-case err
     (progn
       (require 'multiple-cursors)
-      (global-set-key (kbd "C-<") 'mc/mark-next-like-this)
-      (global-set-key (kbd "C->") 'mc/mark-previous-like-this)
-      (global-set-key (kbd "C-c C-a") 'mc/mark-all-like-this)
-      (global-set-key (kbd "C-c C-f") 'mc/mark-next-like-this)
-      (global-set-key (kbd "C-c C-b") 'mc/mark-previous-like-this))
+      (global-set-key (kbd "C-c f") 'mc/mark-next-like-this)
+      (global-set-key (kbd "C-c b") 'mc/mark-previous-like-this)
+      (global-set-key (kbd "C-c a") 'mc/mark-all-like-this)
+      (global-set-key (kbd "C-c m d") 'mc/mark-all-dwim)
+    )
   (error (message "Could not load multiple-cursors: %s" err)))
 
+;; ace-jump-mode
 ;; jumping between words and lines
 (condition-case err
     (progn
@@ -143,6 +163,9 @@
 ;; spaces everywhere
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil) ;; use spaces instead of tabs
+(setq-default tab-always-indent nil)
+(global-set-key (kbd "TAB") 'tab-to-tab-stop)
+(global-set-key (kbd "M-i") 'indent-for-tab-command)
 
 ;; HTML mode 2 spaces
 (add-hook 'html-mode-hook
@@ -170,4 +193,18 @@
 (load-file "~/.emacs.d/feeds.el")   ; just sets elfeed-feeds
 (global-set-key (kbd "C-c r") #'elfeed)
 
+;; Goes to file at cursor point
+(global-set-key (kbd "C-c v f") #'find-file-at-point)
+;; Goes to url at cursor point
+(global-set-key (kbd "C-c v l") #'browse-url-at-point)
+
+;; java stuff
 (load "~/.emacs.d/java.el")
+;; dotnet stuff
+(load "~/.emacs.d/dotnet.el")
+;; local machine specific configurations
+(load "~/.emacs.d/machine.el")
+;; duplicate lines
+(load "~/.emacs.d/duplicate.el")
+;; org mode
+(load "~/.emacs.d/org.el")

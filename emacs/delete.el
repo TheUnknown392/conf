@@ -39,4 +39,5 @@ This command does not push text to `kill-ring'."
 (global-set-key (kbd "C-S-k") 'my-delete-line-backward) ; Ctrl+Shift+k
 (global-set-key (kbd "C-k") 'my-delete-line)
 (global-set-key (kbd "M-d") 'my-delete-word)
+(global-set-key (kbd "<C-backspace>") 'my-backward-delete-word)
 (global-set-key (kbd "<M-backspace>") 'my-backward-delete-word)
