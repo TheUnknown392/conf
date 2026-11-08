@@ -258,6 +258,9 @@ bar {
 # lighter top bar
 client.focused          #3a5560 #3a5560 #f1f1f1
 
+
+# machine specfic things
+include ~/.config/i3/machine
 #wallpaper
 exec --no-startup-id feh --bg-center /usr/share/wallpapers/custom/AdventureTime_Cliff.png
 

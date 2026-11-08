@@ -26,11 +26,10 @@ cp ../i3/.Xmodmap ~/
 
 # wallpaper
 echo " Processing wallpaper..."
-wallpaler_dir='/usr/share/backgrounds/custom/'
-wallpaper_dir+='AdventureTime_Cliff.png'
+wallpaper_dir='/usr/share/wallpapers/custom/'
+sudo mkdir -p $wallpaper_dir
 
-mkdir -p $wallpaler_dir
-cp ../assests/wallpaper/AdventureTime_Cliff.png $wallpaler_dir
+sudo cp ../assests/wallpaper/AdventureTime_Cliff.png $wallpaper_dir
 
 # emacs
 echo "Processing emacs..."
@@ -44,6 +43,7 @@ cp -r ../emacs/theme ~/.emacs.d/
 # i3
 echo "Processing i3..."
 mkdir -p ~/.config/i3/
+touch ~/.config/i3/machine # for machine specific things.
 
 sudo cp ../i3/i3status.conf /etc
 cp ../i3/config ~/.config/i3/
